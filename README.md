@@ -3,3 +3,7 @@ Installe tout les principaux outils de kali
 
 ## Installation
 Les deux fichiers doivent être présents dans le même répertoire, puis exécutez simplement le fichier `toolbox.sh` et suivez les instructions.
+
+## ToDoList
+*Si un seul des fichiers est exécutable et pas le deuxième
+*figlet/lolcat -> changer
