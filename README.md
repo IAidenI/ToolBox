@@ -1,5 +1,5 @@
 # ToolBox
-All basic kali tools
+Installe tout les principaux outils de kali
 
 ## Installation
-Both files must be present in the same directory, and then simply run the `toolbox.sh` file and follow the instructions.
+Les deux fichiers doivent être présents dans le même répertoire, puis exécutez simplement le fichier `toolbox.sh` et suivez les instructions.
