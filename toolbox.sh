@@ -210,7 +210,7 @@ if [ $? -eq 0 ]; then
     check_dl $tool3_label $path/$tool3_label
     if [ $? -eq 1 ]; then
         # Installation de l'outil
-        unzip $path/$tool3_label/$tool3_label.zip -d $path/$tool3_label #&> /dev/null &
+        unzip $path/$tool3_label/$tool3_label.zip -d $path/$tool3_label &> /dev/null &
         animation $tool3_label
         echo "alias volatility=\"$path/$tool3_label/volatility_2.6_lin64_standalone/volatility_2.6_lin64_standalone\"" >> $HOME/.bashrc
         check_install $tool3_label $path/$tool3_label
@@ -238,6 +238,7 @@ if [ $? -eq 0 ]; then
             print_install $tool4_requirement_label
         fi
     fi
+fi
 
 
     # Téléchargement de l'outil
