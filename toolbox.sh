@@ -169,17 +169,17 @@ tool5_label="burpsuite"
 
 # Installation de l'outil 1
 echo "Pour linstallation de $tool1_label, il faut avoir les droits root."
-su -c "mkdir /usr/share/$tool1_label"
+su -c "mkdir -p /usr/share/$tool1_label"
 if [ $? -eq 0 ]; then
     git clone $tool1 /usr/share/$tool1_label &> /dev/null &
     animation_dl "wordlists"
     check_dl "wordlists" "/usr/share/$tool1_label"
 else
-    echo -e "${rouge_start}[-] Erreur : Mot de passe incorrect, impossible d'installer $tool1_label"
+    echo -e "${rouge_start}[-] Erreur : Mot de passe incorrect, impossible d'installer $tool1_label.${rouge_end}"
 fi
 
 # Installation de l'outil 2
-mkdir $path/$tool2_label
+mkdir -p $path/$tool2_label
 tool_is_install $tool2_label
 if [ $? -eq 0 ]; then
     # Téléchargement de l'outil
@@ -199,7 +199,7 @@ if [ $? -eq 0 ]; then
 fi
 
 # Installation de l'outil 3
-mkdir $path/$tool3_label
+mkdir -p $path/$tool3_label
 tool_is_install $tool3_label
 if [ $? -eq 0 ]; then
     # Téléchargement de l'outil
@@ -221,7 +221,7 @@ if [ $? -eq 0 ]; then
 fi
 
 # Installation de l'outls 4
-mkdir $path/$tool4_label
+mkdir -p $path/$tool4_label
 tool_is_install $tool4_label
 if [ $? -eq 0 ]; then
     # Téléchargement du requirement
@@ -260,7 +260,7 @@ if [ $? -eq 0 ]; then
 fi
 
 # Installation de l'outil 5
-mkdir $path/$tool5_label
+mkdir -p $path/$tool5_label
 tool_is_install $tool5_label
 if [ $? -eq 0 ]; then
     # Téléchargement de l'outil
