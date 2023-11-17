@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= #
 # =-= Couleur sur le terminal =-= #
@@ -12,6 +12,12 @@ vert_end="\033[0m"
 # =-=-=-=-=-=-=-=-=-=-= #
 # =-= Les fonctions =-= #
 # =-=-=-=-=-=-=-=-=-=-= #
+
+# Fonction appelée en cas d'interruption clavier (Ctrl+C)
+interrupt_handler(){
+    echo -e "\n${rouge_start}[!] Interruption clavier détectée. Arrêt de l'installation.${rouge_end}"
+    exit 1
+}
 
 # Vérifie que le packet est installé
 is_install(){
@@ -54,6 +60,22 @@ install(){
 # =-= Main =-= #
 # =-=-=-=--=-= #
 
+# Définir le gestionnaire d'interruption clavier
+trap interrupt_handler SIGINT
+
+# Vérifie que qu'il y a une connection internet
+ping -c 3 -W 3 "google.com" &> /dev/null
+if [ $? -ne 0 ]; then
+    echo -e "${rouge_start}[-] Erreur : Aucune connection à internet ou connection instable.${rouge_end}"
+    exit 1
+fi
+
+# Vérifie que l'utilisateur à bien les droits
+if [ "$EUID" -ne 0 ]; then
+    echo -e "${rouge_start}[-] Erreur : Le script $0 doit être lancer en tant que root.${rouge_end}"
+    exit 1
+fi
+
 echo "Voulez vous faire mettre à jour la liste des packets et mettre à jour le système ? (y/n)"
 read -p ">" input
 
@@ -63,7 +85,6 @@ if [ "$input" == "y" ]; then
     echo -e "${vert_start}[+] Mise à jour des packets et du système effectué.${vert_end}"
 elif [ "$input" != "n" ]; then
     echo -e "${rouge_start}[-] Erreur de saisie.${rouge_end}"
-    clear
     exit 1
 fi
 
@@ -83,5 +104,4 @@ install "python3-pip"
 install "sqlmap"
 install "git"
 install "testdisk"
-install "-f"
 install "perl"

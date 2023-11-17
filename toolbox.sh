@@ -15,15 +15,16 @@ bleu_end="\033[0m"
 # =-= Les fonctions =-= #
 # =-=-=-=-=-=-=-=-=-=-= #
 
+# Fonction appelée en cas d'interruption clavier (Ctrl+C)
+interrupt_handler(){
+    echo -e "\n${rouge_start}[!] Interruption clavier détectée. Arrêt de l'installation.${rouge_end}"
+    exit 1
+}
+
 # Vérifie que le packet est installé
 is_install(){
     dpkg -s "$1" &> /dev/null
     return $?
-}
-
-# Supprime les packets installé pour l'affichage du nom du script
-Purge(){
-    apt -y purge figlet &> /dev/null && apt -y purge lolcat &> /dev/null
 }
 
 animation(){
@@ -94,6 +95,9 @@ print_install(){
 # =-= Main =-= #
 # =-=-=-=--=-= #
 
+# Définir le gestionnaire d'interruption clavier
+trap interrupt_handler SIGINT
+
 ping -c 3 -W 3 "google.com" &> /dev/null
 if [ $? -ne 0 ]; then
     echo -e "${rouge_start}[-] Erreur : Aucune connection à internet ou connection instable.${rouge_end}"
@@ -101,20 +105,20 @@ if [ $? -ne 0 ]; then
 fi
 
 # Installation de figlet et lolcat pour l'affichage du nom du script
-if ! is_install "figlet"; then
-    apt -y install figlet &> /dev/null
+if is_install "figlet" && is_install "lolcat"; then
+    figlet ToolBox | lolcat
 fi
 
-if ! is_install "lolcat"; then
-    apt -y install lolcat &> /dev/null
-fi
-
-figlet ToolBox | lolcat
 # Vérifie que les deux fichier d'installation sont au même endroit
 path_root="./toolbox_root.sh"
 if [ ! -e $path_root ]; then
     echo -e "${rouge_start}[-] Erreur : Le deuxième fichier n'est pas présent dans le même répertoire que celui ci.${rouge_end}"
-    Purge
+    exit 1
+fi
+
+# Vérifie que le deuxième fichier est bien exécutable
+if [ -x $path_root ]; then
+    echo -e "${rouge_start}[-] Erreur : Le deuxième fichier n'est pas exécutable, chmod +x $path_root.${rouge_end}"
     exit 1
 fi
 
@@ -130,14 +134,13 @@ if [ ! -d $path ]; then
     fi
 fi
 
-echo "[*] Une partie de ce script à besoin de droit root. Voulez vous l'autoriser a exécuter des commandes root ? y/n"
+echo "Une partie de ce script à besoin de droit root. Voulez vous l'autoriser a exécuter des commandes root ? y/n (recommandé)"
 read -p ">" input
 
 if [ $input == "y" ]; then
     su -c "$path_root"
 elif [ $input != "n" ]; then
     echo -e "${rouge_start}[-] Erreur de saisie.${rouge_end}"
-    Purge
     exit 1
 fi
 
@@ -165,10 +168,10 @@ tool5="https://portswigger-cdn.net/burp/releases/download?product=community&vers
 tool5_label="burpsuite"
 
 # Installation de l'outil 1
-mkdir /usr/share/$wordlists
-git clone $tool1 /usr/share/$wordlists &> /dev/null &
+mkdir /usr/share/$tool1_label
+git clone $tool1 /usr/share/$tool1_label &> /dev/null &
 animation_dl "wordlists"
-check_dl "wordlists" "/usr/share/$wordlists"
+check_dl "wordlists" "/usr/share/$tool1_label"
 
 # Installation de l'outil 2
 mkdir $path/$tool2_label
@@ -180,7 +183,8 @@ if [ $? -eq 0 ]; then
     check_dl $tool2_label $path/$tool2_label
     if [ $? -eq 0 ]; then
         # Installation de l'outil
-        $path/radare2/sys/install.sh &> /dev/null &
+        echo "Pour linstallation de $tool2_label, il faut avoir les droits root (faux mot de passe pour ne pas passer root)."
+        su -c "$path/radare2/sys/install.sh &> /dev/null &"
         animation $tool2_label
         check_install $tool2_label $path/$tool2_label
         if [ $? -eq 0 ]; then
@@ -212,7 +216,7 @@ if [ $? -eq 0 ]; then
 fi
 
 # Installation de l'outls 4
-mkdr $path/$tool4_label
+mkdir $path/$tool4_label
 tool_is_install $tool4_label
 if [ $? -eq 0 ]; then
     # Téléchargement du requirement
@@ -263,5 +267,3 @@ if [ $? -eq 0 ]; then
         echo -e "${bleu_start}[*] Pour installer $tool5_label, il faut exécuter le fichier situer : $path/$tool5_label.${bleu_end}"
     fi
 fi
-
-Purge
