@@ -122,8 +122,10 @@ if [ ! -x $path_root ]; then
     exit 1
 fi
 
-echo "Veuillez selectionner un chemin d'accès relatif ou absolu d'un dossier pour stocker tout les outils (il peut ne pas encore être créé)."
-read -p ">" path
+echo "Veuillez sélectionner un chemin d'accès relatif d'un dossier pour stocker tous les outils (il sera crée si il n'existe pas)."
+echo "~/ ne fonctionnera pas, son équivalent est $HOME"
+read -p "> " path
+
 check=true
 # Vérifie que le chemin existe
 if [ ! -d $path ]; then
@@ -178,44 +180,45 @@ tool5_label="burpsuite"
 #fi
 
 # Installation de l'outil 2
-mkdir -p $path/$tool2_label
-tool_is_install $tool2_label
-if [ $? -eq 0 ]; then
-    # Téléchargement de l'outil
-    git clone $tool2 $path/$tool2_label &> /dev/null &
-    animation_dl $tool2_label
-    check_dl $tool2_label $path/$tool2_label
-    if [ $? -eq 1 ]; then
+#mkdir -p $path/$tool2_label
+#tool_is_install $tool2_label
+#if [ $? -eq 0 ]; then
+#    # Téléchargement de l'outil
+#    git clone $tool2 $path/$tool2_label &> /dev/null &
+#    animation_dl $tool2_label
+#    check_dl $tool2_label $path/$tool2_label
+#    if [ $? -eq 1 ]; then
         # Installation de l'outil
-        echo "Pour l'installation de $tool2_label, il faut avoir les droits root."
-        su -c "$path/radare2/sys/install.sh &> /dev/null &"
-        animation $tool2_label
-        check_install $tool2_label $path/$tool2_label
-        if [ $? -eq 1 ]; then
-            print_install tool2_label
-            echo "(L'installation n'est pas vraiment terminer, elle est passé en arrière plan, il faut peut être attendre un peu avant de pouvoir s'en servir)"
-        fi
-    fi
-fi
+#        echo "Pour l'installation de $tool2_label, il faut avoir les droits root."
+#        su -c "$path/radare2/sys/install.sh &> /dev/null &"
+#        animation $tool2_label
+#        check_install $tool2_label $path/$tool2_label
+#        if [ $? -eq 1 ]; then
+#            print_install tool2_label
+#            echo "(L'installation n'est pas vraiment terminer, elle est passé en arrière plan, il faut peut être attendre un peu avant de pouvoir s'en servir)"
+#        fi
+#    fi
+# fi
 
 # Installation de l'outil 3
 #mkdir -p $path/$tool3_label
 #tool_is_install $tool3_label
 #if [ $? -eq 0 ]; then
-    # Téléchargement de l'outil
-#    wget -r -np --directory-prefix=$path/$tool3_label/ $tool3 #&> /dev/null 
+#    # Téléchargement de l'outil
+#    wget $tool3 -O $path/$tool3_label/$tool3_label.zip &> /dev/null &
 #    animation_dl $tool3_label
 #    check_dl $tool3_label $path/$tool3_label
 #    if [ $? -eq 1 ]; then
 #        # Installation de l'outil
-#        unzip "$path/volatility_2.6_lin64_standalone.zip" #&> /dev/null &
-#        animation $tool3_label
-#        mv "$path/volatility_2.6_lin64_standalone" "volatility"
-#        cat >> $HOME/.bashrc "alias volatility=\"$HOME/$path/$tool3_label/volatility_2.6_lin64_standalone\""
+#        unzip $path/$tool3_label/$tool3_label.zip -d $path/$tool3_label #&> /dev/null &
+#        #animation $tool3_label
+#        #mv "$path/volatility_2.6_lin64_standalone" "volatility"
+#        echo "alias volatility=\"$path/$tool3_label/volatility_2.6_lin64_standalone/volatility_2.6_lin64_standalone\"" >> $HOME/.bashrc
 #        #rm "$path/volatility_2.6_lin64_standalone.zip"
 #        check_install $tool3_label $path/$tool3_label
 #        if [ $? -eq 1 ]; then
 #            print_install $tool3_label
+#            echo "Alias crée dans $HOME/.bashrc"
 #        fi
 #    fi
 #fi
@@ -260,15 +263,16 @@ fi
 #fi
 
 # Installation de l'outil 5
-#mkdir -p $path/$tool5_label
-#tool_is_install $tool5_label
-#if [ $? -eq 0 ]; then
-#    # Téléchargement de l'outil
-#    wget -r -np --directory-prefix=$path/$tool5_label $tool5 &> /dev/null &
-#    animation $tool5_label
-#    check_dl $tool5_label $path/$tool5_label
-#    if [ $? -eq 1 ]; then
-#        print_install $tool3_label
-#        echo -e "${bleu_start}[*] Pour installer $tool5_label, il faut exécuter le fichier situer : $path/$tool5_label.${bleu_end}"
-#    fi
-#fi
+mkdir -p $path/$tool5_label
+tool_is_install $tool5_label
+if [ $? -eq 0 ]; then
+    # Téléchargement de l'outil
+    wget $tool5 -O $path/$tool5_label/$tool5_label.sh  #&> /dev/null &
+    #animation_dl $tool5_label
+    check_dl $tool5_label $path/$tool5_label
+    if [ $? -eq 1 ]; then
+        print_install $tool3_label
+        echo -e "${bleu_start}[*] Pour installer $tool5_label, il faut exécuter le fichier situer : $path/$tool5_label.${bleu_end}"
+    fi
+fi
+
