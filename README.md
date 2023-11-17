@@ -20,3 +20,4 @@ Pour avoir un meilleur affichage :
 - [X] Interuption clavier
 - [X] Problème wordlist
 - [X] Problème radare2
+- [ ] Sanitarize path (ban ~ ../)
