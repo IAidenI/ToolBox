@@ -25,6 +25,21 @@ is_install(){
     return $?
 }
 
+animation(){
+    # Permet de faire un affichage animé avec des points tant que le l'installation du packet n'est pas terminé
+    local -a spin_dot=(".  " ".. " "..." " .." "  ." "   ")
+    local i=0
+    while ps -p $! &> /dev/null; do
+        local char="${spin_dot[$i]}"
+        echo -ne "\r[*] Installation de $1 en cours$char"
+        sleep 0.1
+        i=$(( (i+1) % ${#spin_dot[@]}))
+    done
+
+    wait
+    echo # Saut de ligne
+}
+
 
 # Installe le packet
 install(){
@@ -32,20 +47,7 @@ install(){
         echo -e "${vert_start}[+] $1 est déjà installé.${vert_end}"
     else
         apt -y install "$1" &> /dev/null &
-
-        # Permet de faire un affichage animé avec des points tant que le l'installation du packet n'est pas terminé
-        local -a spin_dot=(".  " ".. " "..." " .." "  ." "   ")
-        local i=0
-        while ps -p $! &> /dev/null; do
-            local char="${spin_dot[$i]}"
-            echo -ne "\r[*] Installation de $1 en cours$char"
-            sleep 0.1
-            i=$(( (i+1) % ${#spin_dot[@]}))
-        done
-
-        wait
-        echo # Saut de ligne
-
+        animation $1
         # Vérifie que l'instalation se soit correctement effectué
         if [ $? -eq 0 ]; then
             echo -e "${vert_start}[+] $1 installé avec succès.${vert_end}"
@@ -81,7 +83,8 @@ read -p ">" input
 
 # Si oui, mise à jour
 if [ "$input" == "y" ]; then
-    apt -y update &> /dev/null && apt -y upgrade &> /dev/null
+    apt -y update &> /dev/null && apt -y upgrade &> /dev/null &
+    animation
     echo -e "${vert_start}[+] Mise à jour des packets et du système effectué.${vert_end}"
 elif [ "$input" != "n" ]; then
     echo -e "${rouge_start}[-] Erreur de saisie.${rouge_end}"

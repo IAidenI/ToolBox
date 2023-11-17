@@ -117,8 +117,8 @@ if [ ! -e $path_root ]; then
 fi
 
 # Vérifie que le deuxième fichier est bien exécutable
-if [ -x $path_root ]; then
-    echo -e "${rouge_start}[-] Erreur : Le deuxième fichier n'est pas exécutable, chmod +x $path_root.${rouge_end}"
+if [ ! -x $path_root ]; then
+    echo -e "${rouge_start}[-] Erreur : Le deuxième fichier n'est pas exécutable, pour résoudre le problème chmod +x $path_root.${rouge_end}"
     exit 1
 fi
 
@@ -168,10 +168,15 @@ tool5="https://portswigger-cdn.net/burp/releases/download?product=community&vers
 tool5_label="burpsuite"
 
 # Installation de l'outil 1
-mkdir /usr/share/$tool1_label
-git clone $tool1 /usr/share/$tool1_label &> /dev/null &
-animation_dl "wordlists"
-check_dl "wordlists" "/usr/share/$tool1_label"
+echo "Pour linstallation de $tool2_label, il faut avoir les droits root."
+su -c "mkdir /usr/share/$tool1_label &> /dev/null"
+if [ $? -eq 0 ]; then
+    git clone $tool1 /usr/share/$tool1_label &> /dev/null &
+    animation_dl "wordlists"
+    check_dl "wordlists" "/usr/share/$tool1_label"
+else
+    echo -e "${rouge_start}[-] Erreur : Mot de passe incorrect, impossible d'installer $tool1_label"
+fi
 
 # Installation de l'outil 2
 mkdir $path/$tool2_label
@@ -181,13 +186,13 @@ if [ $? -eq 0 ]; then
     git clone $tool2 $path/$tool2_label &> /dev/null &
     animation_dl $tool2_label
     check_dl $tool2_label $path/$tool2_label
-    if [ $? -eq 0 ]; then
+    if [ $? -eq 1 ]; then
         # Installation de l'outil
-        echo "Pour linstallation de $tool2_label, il faut avoir les droits root (faux mot de passe pour ne pas passer root)."
+        echo "Pour linstallation de $tool2_label, il faut avoir les droits root."
         su -c "$path/radare2/sys/install.sh &> /dev/null &"
         animation $tool2_label
         check_install $tool2_label $path/$tool2_label
-        if [ $? -eq 0 ]; then
+        if [ $? -eq 1 ]; then
             print_install tool2_label
         fi
     fi
@@ -201,15 +206,15 @@ if [ $? -eq 0 ]; then
     wget $tool3 -O $path/$tool3_label &> /dev/null &
     animation_dl $tool3_label
     check_dl $tool3_label $path/$tool3_label
-    if [ $? -eq 0 ]; then
+    if [ $? -eq 1 ]; then
         # Installation de l'outil
         unzip "$path/volatility_2.6_lin64_standalone.zip" &> /dev/null &
         animation $tool3_label
         mv "$path/volatility_2.6_lin64_standalone" "volatility"
         cat >> $HOME/.bashrc "alias volatility=\"$HOME/$path/$tool3_label/volatility_2.6_lin64_standalone\""
-        rm "$path/volatility_2.6_lin64_standalone.zip"
+        #rm "$path/volatility_2.6_lin64_standalone.zip"
         check_install $tool3_label $path/$tool3_label
-        if [ $? -eq 0 ]; then
+        if [ $? -eq 1 ]; then
             print_install $tool3_label
         fi
     fi
@@ -223,12 +228,12 @@ if [ $? -eq 0 ]; then
     wget $tool4_requirement -O $path/$tool4_label &> /dev/null &
     animation_dl $tool4_requirement_label
     check_dl $tool4_requirement_label $path/$tool4_label
-    if [ $? -eq 0 ]; then
+    if [ $? -eq 1 ]; then
         # Installation de l'outil
         apt -y install $path/$tool4_label/sleuthkit-java_4.12.1-1_amd64.deb &> /dev/null &
         animation $tool4_requirement_label
         check_install $tool4_requirement_label $path/$tool4_label
-        if [ $? -eq 0 ]; then
+        if [ $? -eq 1 ]; then
             print_install $tool4_requirement_label
         fi
     fi
@@ -238,7 +243,7 @@ if [ $? -eq 0 ]; then
     wget $tool4 -O $path/$tool4_label &> /dev/null &
     animation_dl $tool4_label
     check_dl $tool4_label $path/$tool4_label
-    if [ $? -eq 0 ]; then
+    if [ $? -eq 1 ]; then
         unzip autopsy-4.10.0.zip &> /dev/null &
         animation $tool4_label
         mv autopsy-4.10.0 /opt &> /dev/null
@@ -248,7 +253,7 @@ if [ $? -eq 0 ]; then
         sh unix_setup.sh &> /dev/null &
         animation $tool4_label
         check_install $tool4_label $path/$tool4_label
-        if [ $check -eq 0 ]; then
+        if [ $check -eq 1 ]; then
             print_install $tool4_label
         cd $pwd
     fi
@@ -262,7 +267,7 @@ if [ $? -eq 0 ]; then
     wget $tool5 -O $path/$tool5_label &> /dev/null &
     animation $tool5_label
     check_dl $tool5_label $path/$tool5_label
-    if [ $? -eq 0 ]; then
+    if [ $? -eq 1 ]; then
         print_install $tool3_label
         echo -e "${bleu_start}[*] Pour installer $tool5_label, il faut exécuter le fichier situer : $path/$tool5_label.${bleu_end}"
     fi
