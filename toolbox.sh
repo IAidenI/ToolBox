@@ -269,6 +269,7 @@ if [ $? -eq 0 ]; then
     check_dl $tool5_label $path/$tool5_label
     if [ $? -eq 1 ]; then
         print_install $tool3_label
+        chmod +x $path/$tool5_label
         echo -e "${bleu_start}[*] Pour installer $tool5_label, il faut exécuter le fichier situer : $path/$tool5_label.${bleu_end}"
     fi
 fi
