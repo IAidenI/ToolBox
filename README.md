@@ -6,12 +6,10 @@ Pour avoir un meilleur affichage :
 <pre><code>sudo apt -y install figlet && apt -y install lolcat</code></pre>
 
 ## Installation
-<pre><code>
-  git clone https://github.com/IAidenI/ToolBox
+<pre><code>git clone https://github.com/IAidenI/ToolBox
   cd ToolBox
   chmod +x toolbox.sh && chmod +x toolbox_root.sh
-  ./toolbox.sh
-</code></pre>
+  ./toolbox.sh</code></pre>
 **Note** : Les deux fichiers doivent être présents dans le même répertoire.
 
 ## ToDoList
