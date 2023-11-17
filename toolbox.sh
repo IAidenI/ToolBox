@@ -222,26 +222,24 @@ if [ $? -eq 0 ]; then
 fi
 
 # Installation de l'outls 4
-mkdir -p $path/$tool4_label
-tool_is_install $tool4_label
-if [ $? -eq 0 ]; then
-    # Téléchargement du requirement
-    wget -r -np --directory-prefix=$path/$tool4_label $tool4_requirement &> /dev/null &
-    animation_dl $tool4_requirement_label
-    check_dl $tool4_requirement_label $path/$tool4_label
-    if [ $? -eq 1 ]; then
-        # Installation de l'outil
-        apt -y install $path/$tool4_label/sleuthkit-java_4.12.1-1_amd64.deb &> /dev/null &
-        animation $tool4_requirement_label
-        check_install $tool4_requirement_label $path/$tool4_label
-        if [ $? -eq 1 ]; then
-            print_install $tool4_requirement_label
-        fi
-    fi
-fi
-
-
-    # Téléchargement de l'outil
+#mkdir -p $path/$tool4_label
+#tool_is_install $tool4_label
+#if [ $? -eq 0 ]; then
+#    # Téléchargement du requirement
+#    wget -r -np --directory-prefix=$path/$tool4_label $tool4_requirement &> /dev/null &
+#    animation_dl $tool4_requirement_label
+#    check_dl $tool4_requirement_label $path/$tool4_label
+#    if [ $? -eq 1 ]; then
+#        # Installation de l'outil
+#        apt -y install $path/$tool4_label/sleuthkit-java_4.12.1-1_amd64.deb &> /dev/null &
+#        animation $tool4_requirement_label
+#        check_install $tool4_requirement_label $path/$tool4_label
+#        if [ $? -eq 1 ]; then
+#            print_install $tool4_requirement_label
+#        fi
+#    fi
+#
+#    # Téléchargement de l'outil
 #    wget -r -np --directory-prefix=$path/$tool4_label $tool4 &> /dev/null &
 #    animation_dl $tool4_label
 #    check_dl $tool4_label $path/$tool4_label
