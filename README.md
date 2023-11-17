@@ -3,7 +3,7 @@ Installe tout les principaux outils de kali
 
 ## Prérequis
 Pour avoir un meilleur affichage :
-<pre><code>sudo apt install figlet && apt install lolcat</code></pre>
+<pre><code>sudo apt -y install figlet && apt -y install lolcat</code></pre>
 
 ## Installation
 Les deux fichiers doivent être présents dans le même répertoire, puis exécutez simplement le fichier `toolbox.sh` et suivez les instructions.
