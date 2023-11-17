@@ -22,3 +22,4 @@ Pour avoir un meilleur affichage :
 - [X] Problème radare2
 - [ ] Sanitarize path (ban ~ ../)
 - [ ] Autopsy
+- [ ] Processus qui se termine pas, obligé de ps -aux | grep -e "apt" --> sudo kill <processus bloqué>
