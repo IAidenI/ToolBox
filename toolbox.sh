@@ -43,7 +43,7 @@ animation(){
 
 check_install(){
     if [ $? -ne 0 ]; then
-        echo "${rouge_start}[!] Erreur : Impossible d'installer $1.${rouge_end}"
+        echo -e "${rouge_start}[!] Erreur : Impossible d'installer $1.${rouge_end}"
         return 0
     else
         echo -e "${vert_start}[+] $1 installé avec succès dans $2.${vert_end}"
@@ -67,7 +67,7 @@ animation_dl(){
 
 check_dl(){
     if [ $? -ne 0 ]; then
-        echo "${rouge_start}[!] Erreur : Impossible de télécharger $1.${rouge_end}"
+        echo -e "${rouge_start}[!] Erreur : Impossible de télécharger $1.${rouge_end}"
         return 0
     else
         echo -e "${vert_start}[+] $1 téléchargé avec succès dans $2.${vert_end}"
@@ -168,8 +168,8 @@ tool5="https://portswigger-cdn.net/burp/releases/download?product=community&vers
 tool5_label="burpsuite"
 
 # Installation de l'outil 1
-echo "Pour linstallation de $tool2_label, il faut avoir les droits root."
-su -c "mkdir /usr/share/$tool1_label &> /dev/null"
+echo "Pour linstallation de $tool1_label, il faut avoir les droits root."
+su -c "mkdir /usr/share/$tool1_label"
 if [ $? -eq 0 ]; then
     git clone $tool1 /usr/share/$tool1_label &> /dev/null &
     animation_dl "wordlists"
@@ -189,7 +189,7 @@ if [ $? -eq 0 ]; then
     if [ $? -eq 1 ]; then
         # Installation de l'outil
         echo "Pour linstallation de $tool2_label, il faut avoir les droits root."
-        su -c "$path/radare2/sys/install.sh &> /dev/null &"
+        su -c "$path/radare2/sys/install.sh"
         animation $tool2_label
         check_install $tool2_label $path/$tool2_label
         if [ $? -eq 1 ]; then
@@ -203,13 +203,13 @@ mkdir $path/$tool3_label
 tool_is_install $tool3_label
 if [ $? -eq 0 ]; then
     # Téléchargement de l'outil
-    wget $tool3 -O $path/$tool3_label &> /dev/null &
-    animation_dl $tool3_label
+    wget $tool3 -O $path/$tool3_label #&> /dev/null &
+    #animation_dl $tool3_label
     check_dl $tool3_label $path/$tool3_label
     if [ $? -eq 1 ]; then
         # Installation de l'outil
-        unzip "$path/volatility_2.6_lin64_standalone.zip" &> /dev/null &
-        animation $tool3_label
+        unzip "$path/volatility_2.6_lin64_standalone.zip" #&> /dev/null &
+        #animation $tool3_label
         mv "$path/volatility_2.6_lin64_standalone" "volatility"
         cat >> $HOME/.bashrc "alias volatility=\"$HOME/$path/$tool3_label/volatility_2.6_lin64_standalone\""
         #rm "$path/volatility_2.6_lin64_standalone.zip"
