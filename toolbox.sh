@@ -168,107 +168,107 @@ tool5="https://portswigger-cdn.net/burp/releases/download?product=community&vers
 tool5_label="burpsuite"
 
 # Installation de l'outil 1
-echo "Pour l'installation de $tool1_label, il faut avoir les droits root."
-su -c "mkdir -p /usr/share/$tool1_label"
-if [ $? -eq 0 ]; then
-    git clone $tool1 /usr/share/$tool1_label #&> /dev/null &
-    #animation_dl "wordlists"
-    check_dl "wordlists" "/usr/share/$tool1_label"
-else
-    echo -e "${rouge_start}[-] Erreur : Mot de passe incorrect, impossible d'installer $tool1_label.${rouge_end}"
-fi
+#mkdir -p $path/$tool1_label
+#if [ $? -eq 0 ]; then
+#    git clone $tool1 $path/$tool1_label &> /dev/null &
+#    animation_dl "wordlists"
+#    check_dl "wordlists" "$path/$tool1_label"
+#else
+#    echo -e "${rouge_start}[-] Erreur : Mot de passe incorrect, impossible d'installer $tool1_label.${rouge_end}"
+#fi
 
 # Installation de l'outil 2
 mkdir -p $path/$tool2_label
 tool_is_install $tool2_label
 if [ $? -eq 0 ]; then
     # Téléchargement de l'outil
-    git clone $tool2 $path/$tool2_label #&> /dev/null &
-    #animation_dl $tool2_label
+    git clone $tool2 $path/$tool2_label &> /dev/null &
+    animation_dl $tool2_label
     check_dl $tool2_label $path/$tool2_label
     if [ $? -eq 1 ]; then
         # Installation de l'outil
         echo "Pour l'installation de $tool2_label, il faut avoir les droits root."
-        su -c "$path/radare2/sys/install.sh"
+        su -c "$path/radare2/sys/install.sh &> /dev/null &"
         animation $tool2_label
         check_install $tool2_label $path/$tool2_label
         if [ $? -eq 1 ]; then
             print_install tool2_label
+            echo "(L'installation n'est pas vraiment terminer, elle est passé en arrière plan, il faut peut être attendre un peu avant de pouvoir s'en servir)"
         fi
     fi
 fi
 
 # Installation de l'outil 3
-mkdir -p $path/$tool3_label
-tool_is_install $tool3_label
-if [ $? -eq 0 ]; then
+#mkdir -p $path/$tool3_label
+#tool_is_install $tool3_label
+#if [ $? -eq 0 ]; then
     # Téléchargement de l'outil
-    wget $tool3 -O $path/$tool3_label &> /dev/null &
-    animation_dl $tool3_label
-    check_dl $tool3_label $path/$tool3_label
-    if [ $? -eq 1 ]; then
-        # Installation de l'outil
-        unzip "$path/volatility_2.6_lin64_standalone.zip" &> /dev/null &
-        animation $tool3_label
-        mv "$path/volatility_2.6_lin64_standalone" "volatility"
-        cat >> $HOME/.bashrc "alias volatility=\"$HOME/$path/$tool3_label/volatility_2.6_lin64_standalone\""
-        #rm "$path/volatility_2.6_lin64_standalone.zip"
-        check_install $tool3_label $path/$tool3_label
-        if [ $? -eq 1 ]; then
-            print_install $tool3_label
-        fi
-    fi
-fi
+#    wget -r -np --directory-prefix=$path/$tool3_label/ $tool3 #&> /dev/null 
+#    animation_dl $tool3_label
+#    check_dl $tool3_label $path/$tool3_label
+#    if [ $? -eq 1 ]; then
+#        # Installation de l'outil
+#        unzip "$path/volatility_2.6_lin64_standalone.zip" #&> /dev/null &
+#        animation $tool3_label
+#        mv "$path/volatility_2.6_lin64_standalone" "volatility"
+#        cat >> $HOME/.bashrc "alias volatility=\"$HOME/$path/$tool3_label/volatility_2.6_lin64_standalone\""
+#        #rm "$path/volatility_2.6_lin64_standalone.zip"
+#        check_install $tool3_label $path/$tool3_label
+#        if [ $? -eq 1 ]; then
+#            print_install $tool3_label
+#        fi
+#    fi
+#fi
 
 # Installation de l'outls 4
-mkdir -p $path/$tool4_label
-tool_is_install $tool4_label
-if [ $? -eq 0 ]; then
+#mkdir -p $path/$tool4_label
+#tool_is_install $tool4_label
+#if [ $? -eq 0 ]; then
     # Téléchargement du requirement
-    wget $tool4_requirement -O $path/$tool4_label &> /dev/null &
-    animation_dl $tool4_requirement_label
-    check_dl $tool4_requirement_label $path/$tool4_label
-    if [ $? -eq 1 ]; then
-        # Installation de l'outil
-        apt -y install $path/$tool4_label/sleuthkit-java_4.12.1-1_amd64.deb &> /dev/null &
-        animation $tool4_requirement_label
-        check_install $tool4_requirement_label $path/$tool4_label
-        if [ $? -eq 1 ]; then
-            print_install $tool4_requirement_label
-        fi
-    fi
+#    wget -r -np --directory-prefix=$path/$tool4_label $tool4_requirement &> /dev/null &
+#    animation_dl $tool4_requirement_label
+#    check_dl $tool4_requirement_label $path/$tool4_label
+#    if [ $? -eq 1 ]; then
+#        # Installation de l'outil
+#        apt -y install $path/$tool4_label/sleuthkit-java_4.12.1-1_amd64.deb &> /dev/null &
+#        animation $tool4_requirement_label
+#        check_install $tool4_requirement_label $path/$tool4_label
+#        if [ $? -eq 1 ]; then
+#            print_install $tool4_requirement_label
+#        fi
+#    fi
 
 
     # Téléchargement de l'outil
-    wget $tool4 -O $path/$tool4_label &> /dev/null &
-    animation_dl $tool4_label
-    check_dl $tool4_label $path/$tool4_label
-    if [ $? -eq 1 ]; then
-        unzip autopsy-4.10.0.zip &> /dev/null &
-        animation $tool4_label
-        mv autopsy-4.10.0 /opt &> /dev/null
-        temp=pwd
-        cd /opt/autopsy-4.10.0 &> /dev/null
-        export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_212 &> /dev/null
-        sh unix_setup.sh &> /dev/null &
-        animation $tool4_label
-        check_install $tool4_label $path/$tool4_label
-        if [ $check -eq 1 ]; then
-            print_install $tool4_label
-        cd $pwd
-    fi
-fi
+#    wget -r -np --directory-prefix=$path/$tool4_label $tool4 &> /dev/null &
+#    animation_dl $tool4_label
+#    check_dl $tool4_label $path/$tool4_label
+#    if [ $? -eq 1 ]; then
+#        unzip autopsy-4.10.0.zip &> /dev/null &
+#        animation $tool4_label
+#        mv autopsy-4.10.0 /opt &> /dev/null
+#        temp=pwd
+#        cd /opt/autopsy-4.10.0 &> /dev/null
+#        export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_212 &> /dev/null
+#        sh unix_setup.sh &> /dev/null &
+#        animation $tool4_label
+#        check_install $tool4_label $path/$tool4_label
+#        if [ $check -eq 1 ]; then
+#            print_install $tool4_label
+#        cd $pwd
+#    fi
+#fi
 
 # Installation de l'outil 5
-mkdir -p $path/$tool5_label
-tool_is_install $tool5_label
-if [ $? -eq 0 ]; then
-    # Téléchargement de l'outil
-    wget $tool5 -O $path/$tool5_label &> /dev/null &
-    animation $tool5_label
-    check_dl $tool5_label $path/$tool5_label
-    if [ $? -eq 1 ]; then
-        print_install $tool3_label
-        echo -e "${bleu_start}[*] Pour installer $tool5_label, il faut exécuter le fichier situer : $path/$tool5_label.${bleu_end}"
-    fi
-fi
+#mkdir -p $path/$tool5_label
+#tool_is_install $tool5_label
+#if [ $? -eq 0 ]; then
+#    # Téléchargement de l'outil
+#    wget -r -np --directory-prefix=$path/$tool5_label $tool5 &> /dev/null &
+#    animation $tool5_label
+#    check_dl $tool5_label $path/$tool5_label
+#    if [ $? -eq 1 ]; then
+#        print_install $tool3_label
+#        echo -e "${bleu_start}[*] Pour installer $tool5_label, il faut exécuter le fichier situer : $path/$tool5_label.${bleu_end}"
+#    fi
+#fi
