@@ -168,11 +168,11 @@ tool5="https://portswigger-cdn.net/burp/releases/download?product=community&vers
 tool5_label="burpsuite"
 
 # Installation de l'outil 1
-echo "Pour linstallation de $tool1_label, il faut avoir les droits root."
+echo "Pour l'installation de $tool1_label, il faut avoir les droits root."
 su -c "mkdir -p /usr/share/$tool1_label"
 if [ $? -eq 0 ]; then
-    git clone $tool1 /usr/share/$tool1_label &> /dev/null &
-    animation_dl "wordlists"
+    git clone $tool1 /usr/share/$tool1_label #&> /dev/null &
+    #animation_dl "wordlists"
     check_dl "wordlists" "/usr/share/$tool1_label"
 else
     echo -e "${rouge_start}[-] Erreur : Mot de passe incorrect, impossible d'installer $tool1_label.${rouge_end}"
@@ -183,12 +183,12 @@ mkdir -p $path/$tool2_label
 tool_is_install $tool2_label
 if [ $? -eq 0 ]; then
     # Téléchargement de l'outil
-    git clone $tool2 $path/$tool2_label &> /dev/null &
-    animation_dl $tool2_label
+    git clone $tool2 $path/$tool2_label #&> /dev/null &
+    #animation_dl $tool2_label
     check_dl $tool2_label $path/$tool2_label
     if [ $? -eq 1 ]; then
         # Installation de l'outil
-        echo "Pour linstallation de $tool2_label, il faut avoir les droits root."
+        echo "Pour l'installation de $tool2_label, il faut avoir les droits root."
         su -c "$path/radare2/sys/install.sh"
         animation $tool2_label
         check_install $tool2_label $path/$tool2_label
@@ -203,13 +203,13 @@ mkdir -p $path/$tool3_label
 tool_is_install $tool3_label
 if [ $? -eq 0 ]; then
     # Téléchargement de l'outil
-    wget $tool3 -O $path/$tool3_label #&> /dev/null &
-    #animation_dl $tool3_label
+    wget $tool3 -O $path/$tool3_label &> /dev/null &
+    animation_dl $tool3_label
     check_dl $tool3_label $path/$tool3_label
     if [ $? -eq 1 ]; then
         # Installation de l'outil
-        unzip "$path/volatility_2.6_lin64_standalone.zip" #&> /dev/null &
-        #animation $tool3_label
+        unzip "$path/volatility_2.6_lin64_standalone.zip" &> /dev/null &
+        animation $tool3_label
         mv "$path/volatility_2.6_lin64_standalone" "volatility"
         cat >> $HOME/.bashrc "alias volatility=\"$HOME/$path/$tool3_label/volatility_2.6_lin64_standalone\""
         #rm "$path/volatility_2.6_lin64_standalone.zip"
