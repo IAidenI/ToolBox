@@ -21,3 +21,4 @@ Pour avoir un meilleur affichage :
 - [X] Problème wordlist
 - [X] Problème radare2
 - [ ] Sanitarize path (ban ~ ../)
+- [ ] Autopsy
