@@ -11,5 +11,5 @@ Les deux fichiers doivent être présents dans le même répertoire, puis exécu
 ## ToDoList
 - [X] Si un seul des fichiers est exécutable et pas le deuxième
 - [X] Interuption clavier
-- [X] Problème wordlist
+- [ ] Problème wordlist
 - [X] Problème radare2
