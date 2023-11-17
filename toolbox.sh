@@ -124,7 +124,7 @@ fi
 
 echo "Veuillez sélectionner un chemin d'accès relatif d'un dossier pour stocker tous les outils (il sera crée si il n'existe pas)."
 echo "~/ ne fonctionnera pas, son équivalent est $HOME"
-read -p "> " path
+read -p ">" path
 
 check=true
 # Vérifie que le chemin existe
@@ -212,11 +212,11 @@ if [ $? -eq 0 ]; then
         # Installation de l'outil
         unzip $path/$tool3_label/$tool3_label.zip -d $path/$tool3_label &> /dev/null &
         animation $tool3_label
-        echo "alias volatility=\"$path/$tool3_label/volatility_2.6_lin64_standalone/volatility_2.6_lin64_standalone\"" >> $HOME/.bashrc
+        export PATH="$path/$tool3_label/volatility_2.6_lin64_standalone/volatility_2.6_lin64_standalone:$PATH"
+        source $HOME/.bashrc
         check_install $tool3_label $path/$tool3_label
         if [ $? -eq 1 ]; then
             print_install $tool3_label
-            echo "Alias crée dans $HOME/.bashrc"
         fi
     fi
 fi
