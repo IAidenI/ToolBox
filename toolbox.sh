@@ -264,8 +264,8 @@ mkdir -p $path/$tool5_label
 tool_is_install $tool5_label
 if [ $? -eq 0 ]; then
     # Téléchargement de l'outil
-    wget $tool5 -O $path/$tool5_label/$tool5_label.sh  #&> /dev/null &
-    #animation_dl $tool5_label
+    wget $tool5 -O $path/$tool5_label/$tool5_label.sh  &> /dev/null &
+    animation_dl $tool5_label
     check_dl $tool5_label $path/$tool5_label
     if [ $? -eq 1 ]; then
         print_install $tool3_label
