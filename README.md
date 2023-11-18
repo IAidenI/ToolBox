@@ -7,10 +7,10 @@ Pour avoir un meilleur affichage :
 
 ## Installation
 <pre><code>
-  git clone https://github.com/IAidenI/ToolBox
-  cd ToolBox
-  chmod +x toolbox.sh && chmod +x toolbox_root.sh
-  ./toolbox.sh
+git clone https://github.com/IAidenI/ToolBox
+cd ToolBox
+chmod +x toolbox.sh && chmod +x toolbox_root.sh
+./toolbox.sh
 </code></pre>
 **Note** : Les deux fichiers doivent être présents dans le même répertoire.
 
