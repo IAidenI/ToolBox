@@ -7,8 +7,8 @@ rouge_start="\033[31m"
 rouge_end="\033[0m"
 vert_start="\033[32m"
 vert_end="\033[0m"
-bleu_start="\033[36m"
-bleu_end="\033[0m"
+jaune_start="\033[33m"
+jaune_end="\033[0m"
 
 
 # =-=-=-=-=-=-=-=-=-=-= #
@@ -43,7 +43,7 @@ animation(){
 
 check_install(){
     if [ $? -ne 0 ]; then
-        echo -e "${rouge_start}[!] Erreur : Impossible d'installer $1.${rouge_end}"
+        echo -e "${rouge_start}[-] Installation de $1 échoué.${rouge_end}"
         return 0
     else
         echo -e "${vert_start}[+] $1 installé avec succès dans $2.${vert_end}"
@@ -67,7 +67,7 @@ animation_dl(){
 
 check_dl(){
     if [ $? -ne 0 ]; then
-        echo -e "${rouge_start}[!] Erreur : Impossible de télécharger $1.${rouge_end}"
+        echo -e "${rouge_start}[-] Téléchargement de $1 échoué.${rouge_end}"
         return 0
     else
         echo -e "${vert_start}[+] $1 téléchargé avec succès dans $2.${vert_end}"
@@ -86,7 +86,7 @@ tool_is_install(){
 
 print_install(){
     if [ $? -ne 0 ]; then
-        echo -e "${rouge_start}[-] Erreur : L'installation de $1 ne s'est pas effectué correctement.${rouge_end}"
+        echo -e "${rouge_start}[-] L'installation de $1 ne s'est pas effectué correctement.${rouge_end}"
     fi
 }
 
@@ -100,7 +100,7 @@ trap interrupt_handler SIGINT
 
 ping -c 3 -W 3 "google.com" &> /dev/null
 if [ $? -ne 0 ]; then
-    echo -e "${rouge_start}[-] Erreur : Aucune connection à internet ou connection instable.${rouge_end}"
+    echo -e "${rouge_start}[!] Erreur : Aucune connection à internet ou connection instable.${rouge_end}"
     exit 1
 fi
 
@@ -112,13 +112,13 @@ fi
 # Vérifie que les deux fichier d'installation sont au même endroit
 path_root="./toolbox_root.sh"
 if [ ! -e $path_root ]; then
-    echo -e "${rouge_start}[-] Erreur : Le deuxième fichier n'est pas présent dans le même répertoire que celui ci.${rouge_end}"
+    echo -e "${rouge_start}[!] Erreur : Le deuxième fichier n'est pas présent dans le même répertoire que celui ci.${rouge_end}"
     exit 1
 fi
 
 # Vérifie que le deuxième fichier est bien exécutable
 if [ ! -x $path_root ]; then
-    echo -e "${rouge_start}[-] Erreur : Le deuxième fichier n'est pas exécutable, pour résoudre le problème chmod +x $path_root.${rouge_end}"
+    echo -e "${rouge_start}[!] Erreur : Le deuxième fichier n'est pas exécutable, pour résoudre le problème chmod +x $path_root.${rouge_end}"
     exit 1
 fi
 
@@ -195,7 +195,7 @@ if [ $? -eq 0 ]; then
         check_install $tool2_label $path/$tool2_label
         if [ $? -eq 1 ]; then
             print_install tool2_label
-            echo "(L'installation n'est pas vraiment terminer, elle est passé en arrière plan, il faut peut être attendre un peu avant de pouvoir s'en servir)"
+            echo "${jaune_start}[!]L'installation n'est pas vraiment terminer, elle est passé en arrière plan, il faut peut être attendre un peu avant de pouvoir s'en servir.${jaune_end}"
         fi
     fi
  fi
@@ -270,7 +270,7 @@ if [ $? -eq 0 ]; then
     if [ $? -eq 1 ]; then
         print_install $tool3_label
         chmod +x $path/$tool5_label
-        echo -e "${bleu_start}[*] Pour installer $tool5_label, il faut exécuter le fichier situer : $path/$tool5_label.${bleu_end}"
+        echo -e "${jaune_start}[!] Pour installer $tool5_label, il faut exécuter le fichier situer : $path/$tool5_label.${jaune_end}"
     fi
 fi
 
