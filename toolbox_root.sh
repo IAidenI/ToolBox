@@ -52,7 +52,7 @@ install(){
         if [ $? -eq 0 ]; then
             echo -e "${vert_start}[+] $1 installé avec succès.${vert_end}"
         else
-            echo -e "${rouge_start}[!] Erreur : Le packet $1 ne s'est pas installé correctement (erreur possible : mauvase connection internet - packet obsolète).${rouge_end}"
+            echo -e "${rouge_start}[-] Le packet $1 ne s'est pas installé correctement (erreur possible : mauvase connection internet - packet obsolète).${rouge_end}"
         fi
     fi
 }
@@ -68,13 +68,13 @@ trap interrupt_handler SIGINT
 # Vérifie que qu'il y a une connection internet
 ping -c 3 -W 3 "google.com" &> /dev/null
 if [ $? -ne 0 ]; then
-    echo -e "${rouge_start}[-] Erreur : Aucune connection à internet ou connection instable.${rouge_end}"
+    echo -e "${rouge_start}[!] Erreur : Aucune connection à internet ou connection instable.${rouge_end}"
     exit 1
 fi
 
 # Vérifie que l'utilisateur à bien les droits
 if [ "$EUID" -ne 0 ]; then
-    echo -e "${rouge_start}[-] Erreur : Le script $0 doit être lancer en tant que root.${rouge_end}"
+    echo -e "${rouge_start}[!] Erreur : Le script $0 doit être lancer en tant que root.${rouge_end}"
     exit 1
 fi
 
