@@ -19,7 +19,7 @@ Installe les principaux outils de kali :
 - [X] [Radare2](https://github.com/radareorg/radare2) : Utilisation `radare2/r2 --help`
 - [X] [Volatility](https://www.volatilityfoundation.org/) : Utilisation `volatility --help`
 - [ ] [Autopsy](https://www.autopsy.com/)
-- [X] [BurpSuite](https://portswigger.net/burp) : Instalation manuelle requis
+- [X] [BurpSuite](https://portswigger.net/burp) : Installation manuelle requis
 
 ## Prérequis
 Pour avoir un meilleur affichage :
