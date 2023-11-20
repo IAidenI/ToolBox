@@ -7,7 +7,7 @@ Installe les principaux outils de kali :
 - [X] [Netcat](https://www.kali.org/tools/netcat/) : Utilisation `netcat/nc --help`
 - [X] [Curl](https://www.kali.org/tools/curl/) : Utilisation `curl --help`
 - [X] [Dirb](https://www.kali.org/tools/dirb/) : Utilisation `dirb --help`
-- [X] Ifconfig/Arp/Netstat/rarp/nameif/route : Utilisation `ifconfig/Arp/Netstat/rarp/nameif/route --help`
+- [X] Ifconfig/Arp/Netstat/rarp/nameif/route : Utilisation `ifconfig/arp/netstat/rarp/nameif/route --help`
 - [X] Python3 : Utilisation `python3 --help`
 - [X] Pip : Utilisation `pip --help`
 - [X] Perl : Utilisation `perl --help`
