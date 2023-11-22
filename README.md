@@ -35,7 +35,7 @@ chmod +x toolbox.sh && chmod +x toolbox_root.sh
 **Note** : Les deux fichiers doivent être présents dans le même répertoire.
 
 ## Possible problème
-Si l'un des packets (ex : wireshark) met énormément de temps à s'installer (> 5min) arrêter le programme et faire `ps -aux | grep -e "apt"` copier l'id du packet qui pose problème et faire `sudo kill id_du_packet` et relancer l'application.
+Si l'un des packets (ex : wireshark) met énormément de temps à s'installer (> 5min) arrêter le programme et faire `ps -aux | grep -e "apt"` copier le pid du packet qui pose problème et faire `sudo kill pid_du_packet` et relancer l'application.
 
 ## ToDoList
 
