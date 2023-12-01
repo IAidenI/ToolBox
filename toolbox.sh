@@ -212,7 +212,7 @@ if [ $? -eq 0 ]; then
         # Installation de l'outil
         unzip $path/$tool3_label/$tool3_label.zip -d $path/$tool3_label &> /dev/null &
         animation $tool3_label
-        export PATH="$path/$tool3_label/volatility_2.6_lin64_standalone/volatility_2.6_lin64_standalone:$PATH"
+        echo 'export PATH="$path/$tool3_label/volatility_2.6_lin64_standalone/volatility_2.6_lin64_standalone:$PATH"' >> $HOME/.bashrc
         source $HOME/.bashrc
         check_install $tool3_label $path/$tool3_label
         if [ $? -eq 1 ]; then
