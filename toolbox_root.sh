@@ -84,7 +84,7 @@ read -p ">" input
 # Si oui, mise à jour
 if [ "$input" == "y" ]; then
     apt -y update &> /dev/null && apt -y upgrade &> /dev/null &
-    animation
+    animation "la mise à jour"
     echo -e "${vert_start}[+] Mise à jour des packets et du système effectué.${vert_end}"
 elif [ "$input" != "n" ]; then
     echo -e "${rouge_start}[-] Erreur de saisie.${rouge_end}"
@@ -93,7 +93,6 @@ fi
 
 # Installation des packets
 install "hashcat"
-install "wireshark"
 install "libimage-exiftool-perl"
 install "nmap"
 install "netcat-openbsd"
@@ -111,3 +110,4 @@ install "strace"
 install "git"
 install "testdisk"
 install "gdb"
+install "wireshark"
